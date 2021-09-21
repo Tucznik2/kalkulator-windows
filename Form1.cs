@@ -60,10 +60,10 @@ namespace kalkulator_windows
                 case "-":
                     entryContent.Text = (value - double.Parse(entryContent.Text)).ToString();
                     break;
-                case "X":
+                case "×":
                     entryContent.Text = (value * double.Parse(entryContent.Text)).ToString();
                     break;
-                case "/":
+                case "÷":
                     entryContent.Text = (value / double.Parse(entryContent.Text)).ToString();
                     break;
             }
@@ -92,6 +92,47 @@ namespace kalkulator_windows
         private void button4_Click(object sender, EventArgs e)
         {
             entryContent.Text = entryContent.Text.Remove(entryContent.Text.Length - 1, 1);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            if (!entryContent.Text.Contains(","))
+            {
+                entryContent.Text += button.Text;
+                button21.Enabled = false;
+            }
+            else
+            {
+                button21.Enabled = true;
+            }
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            entryContent.Text = (double.Parse(entryContent.Text) * -1).ToString();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            entryContent.Text = (double.Parse(entryContent.Text) * 0.01).ToString();
+            operationClicked = true;
+        }
+        private void allButtons_MouseEnter(object sender, System.EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BackColor = Color.FromArgb(45, 45, 45);
+        }
+
+        private void numericButtons_MouseLeave(object sender, System.EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BackColor = Color.FromArgb(6, 6, 6); // whatever your original color was
+        }
+        private void restButtons_MouseLeave(object sender, System.EventArgs e)
+        {
+            Button button = (Button)sender;
+            button.BackColor = Color.FromArgb(13, 13, 13); // whatever your original color was
         }
     }
 }
