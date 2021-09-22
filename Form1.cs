@@ -118,21 +118,5 @@ namespace kalkulator_windows
             entryContent.Text = (double.Parse(entryContent.Text) * 0.01).ToString();
             operationClicked = true;
         }
-        private void allButtons_MouseEnter(object sender, System.EventArgs e)
-        {
-            Button button = (Button)sender;
-            button.BackColor = Color.FromArgb(45, 45, 45);
-        }
-
-        private void numericButtons_MouseLeave(object sender, System.EventArgs e)
-        {
-            Button button = (Button)sender;
-            button.BackColor = Color.FromArgb(6, 6, 6); // whatever your original color was
-        }
-        private void restButtons_MouseLeave(object sender, System.EventArgs e)
-        {
-            Button button = (Button)sender;
-            button.BackColor = Color.FromArgb(13, 13, 13); // whatever your original color was
-        }
     }
 }
