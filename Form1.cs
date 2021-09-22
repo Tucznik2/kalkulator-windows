@@ -34,8 +34,7 @@ namespace kalkulator_windows
         private void numberButton_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            bool isEmpty = entryContent.Text == string.Empty;
-            if (entryContent.Text == "0" || operationClicked )
+            if(entryContent.Text == "0" || operationClicked)
             {
                 entryContent.Clear();
             }
@@ -50,7 +49,42 @@ namespace kalkulator_windows
             value = double.Parse(entryContent.Text);
             operationClicked = true;
             button21.Enabled = true;
-            resultLabel.Text = value + " " + operation;
+            bool isEmpty = resultLabel.Text == "";
+            if (isEmpty)
+            {
+
+                resultLabel.Text = value + " " + operation;
+            }
+            else
+            {
+                double resultLabelValue = double.Parse(resultLabel.Text.Remove(resultLabel.Text.Length - 2, 2));
+                switch (operation)
+                {
+                    case "+":
+                        resultLabel.Text = (resultLabelValue + value).ToString() + " " + operation;
+                        entryContent.Text = (resultLabelValue + value).ToString();
+                        break;
+                    case "-":
+                        resultLabel.Text = (resultLabelValue - value).ToString() + " " + operation;
+                        entryContent.Text = (resultLabelValue - value).ToString();
+                        break;
+                    case "×":
+                        resultLabel.Text = (resultLabelValue * value).ToString() + " " + operation;
+                        entryContent.Text = (resultLabelValue * value).ToString();
+                        break;
+                    case "÷":
+                        if (entryContent.Text == "0")
+                        {
+                            entryContent.Text = "Nie możesz dzielić przez 0!";
+                        }
+                        else
+                        {
+                            resultLabel.Text = (resultLabelValue / value).ToString() + " " + operation;
+                            entryContent.Text = (resultLabelValue / value).ToString();
+                        }
+                        break;
+                }
+            }
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -132,7 +166,7 @@ namespace kalkulator_windows
             }
             else
             {
-                entryContent.Text = (double.Parse(entryContent.Text) * 0.01).ToString();
+                entryContent.Text = (double.Parse(entryContent.Text) /100).ToString();
             }
         }
     }
