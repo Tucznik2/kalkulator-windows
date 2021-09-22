@@ -24,15 +24,18 @@ namespace kalkulator_windows
             resultLabel.Text = "";
             entryContent.Text = "0";
             operationClicked = false;
+            button21.Enabled = true;
         }
         private void entryClearButton_Click(object sender, EventArgs e)
         {
             entryContent.Text = "0";
+            button21.Enabled = true;
         }
         private void numberButton_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            if ((entryContent.Text == "0") || (operationClicked))
+            bool isEmpty = entryContent.Text == string.Empty;
+            if (entryContent.Text == "0" || operationClicked )
             {
                 entryContent.Clear();
             }
@@ -46,6 +49,7 @@ namespace kalkulator_windows
             operation = button.Text;
             value = double.Parse(entryContent.Text);
             operationClicked = true;
+            button21.Enabled = true;
             resultLabel.Text = value + " " + operation;
         }
 
@@ -64,7 +68,14 @@ namespace kalkulator_windows
                     entryContent.Text = (value * double.Parse(entryContent.Text)).ToString();
                     break;
                 case "÷":
-                    entryContent.Text = (value / double.Parse(entryContent.Text)).ToString();
+                    if(entryContent.Text == "0")
+                    {
+                        entryContent.Text = "Nie możesz dzielić przez 0!";
+                    }
+                    else
+                    {
+                        entryContent.Text = (value / double.Parse(entryContent.Text)).ToString();
+                    }
                     break;
             }
         }
@@ -75,14 +86,14 @@ namespace kalkulator_windows
             entryContent.Text = (1 / value).ToString();
             operationClicked = true;
         }
-        private void button7_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)
         {
             value = double.Parse(entryContent.Text);
             operationClicked = true;
             entryContent.Text = (Math.Sqrt(value)).ToString();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void button7_Click(object sender, EventArgs e)
         {
             value = double.Parse(entryContent.Text);
             operationClicked = true;
@@ -97,14 +108,14 @@ namespace kalkulator_windows
         private void button21_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            if (!entryContent.Text.Contains(","))
+            if (entryContent.Text.Contains(","))
             {
-                entryContent.Text += button.Text;
                 button21.Enabled = false;
             }
             else
             {
-                button21.Enabled = true;
+                entryContent.Text += button.Text;
+                button21.Enabled = false;
             }
         }
 
@@ -115,8 +126,14 @@ namespace kalkulator_windows
 
         private void button1_Click(object sender, EventArgs e)
         {
-            entryContent.Text = (double.Parse(entryContent.Text) * 0.01).ToString();
-            operationClicked = true;
+            if(resultLabel.Text == "")
+            {
+                entryContent.Text = "0";
+            }
+            else
+            {
+                entryContent.Text = (double.Parse(entryContent.Text) * 0.01).ToString();
+            }
         }
     }
 }
