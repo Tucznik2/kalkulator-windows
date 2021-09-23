@@ -90,12 +90,29 @@ namespace kalkulator_windows
 
         private void button22_Click(object sender, EventArgs e)
         {
-            string resultLabelValue = resultLabel.Text.Remove(resultLabel.Text.Length - 2, 2);
-            if (resultLabelValue == entryContent.Text)
+            switch (operation)
             {
-                resultLabel.Text = (double.Parse(resultLabelValue) - double.Parse(resultLabelValue)).ToString();
+                case "+":
+                    entryContent.Text = (value + double.Parse(entryContent.Text)).ToString();
+                    break;
+                case "-":
+                    entryContent.Text = (value - double.Parse(entryContent.Text)).ToString();
+                    break;
+                case "×":
+                    entryContent.Text = (value * double.Parse(entryContent.Text)).ToString();
+                    break;
+                case "÷":
+                    if (entryContent.Text == "0")
+                    {
+                        entryContent.Text = "Nie możesz dzielić przez 0!";
+                    }
+                    else
+                    {
+                        entryContent.Text = (value / double.Parse(entryContent.Text)).ToString();
+                    }
+                    break;
             }
-
+            resultLabel.Text = "";
         }
 
         private void button5_Click(object sender, EventArgs e)
