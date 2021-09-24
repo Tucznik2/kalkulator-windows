@@ -16,6 +16,7 @@ namespace kalkulator_windows
         string lastOperation = "";
         double value = 0;
         bool operationClicked = false;
+        bool operationPerformed = false;
         public Kalkulator()
         {
             InitializeComponent();
@@ -35,11 +36,12 @@ namespace kalkulator_windows
         private void numberButton_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
-            if(entryContent.Text == "0" || operationClicked)
+            if(entryContent.Text == "0" || operationClicked || operationPerformed)
             {
                 entryContent.Clear();
             }
             operationClicked = false;
+            operationPerformed = false;
             entryContent.Text += double.Parse(button.Text);
         }
 
@@ -112,6 +114,7 @@ namespace kalkulator_windows
                     }
                     break;
             }
+            operationPerformed = true;
             resultLabel.Text = "";
         }
 
@@ -167,7 +170,29 @@ namespace kalkulator_windows
             }
             else
             {
-                entryContent.Text = (double.Parse(entryContent.Text) /100).ToString();
+                switch (operation)
+                {
+                    case "+":
+                        entryContent.Text = (value + (value * double.Parse(entryContent.Text) / 100)).ToString();
+                        break;
+                    case "-":
+                        entryContent.Text = (value - (value * double.Parse(entryContent.Text) / 100)).ToString();
+                        break;
+                    case "×":
+                        entryContent.Text = (value * (value * double.Parse(entryContent.Text) / 100)).ToString();
+                        break;
+                    case "÷":
+                        if (entryContent.Text == "0")
+                        {
+                            entryContent.Text = "Nie możesz dzielić przez 0!";
+                        }
+                        else
+                        {
+                            entryContent.Text = (value / (value * double.Parse(entryContent.Text) / 100)).ToString();
+                        }
+                        break;
+                }
+                resultLabel.Text = "";
             }
         }
     }
